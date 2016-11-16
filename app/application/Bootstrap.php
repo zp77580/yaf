@@ -19,7 +19,6 @@ class Bootstrap extends Yaf\Bootstrap_Abstract {
 			$new_uri['controller'] = $uri_list[1];
 			$new_uri['action'] = $uri_list[2];
 		}
-		//print_r($new_uri);die;
 		//处理路由
 		$router = Yaf\Dispatcher::getInstance()->getRouter();   //获取路由器
 		$route = new Yaf\Route\Rewrite( $uri_list[0] , $new_uri);

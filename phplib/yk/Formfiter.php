@@ -6,6 +6,7 @@ class Formfiter {
 		if(count($params) == 0){
 			return array();
 		}
+		$valid_data = array();
 
 		foreach ($params as $param_name) {
 			$pos = strpos($param_name, "_");
@@ -17,9 +18,9 @@ class Formfiter {
 			}
 
 			$url_data = $this->_getParamUrl($type,$param_conf);
-			var_dump($url_data);
+			$ret = $this->_check($param_conf,$url_data,$valid_data);
 		}
-		die;
+		return $valid_data;
 	}
 
 	public function _getParamConf($type,$param){
@@ -40,12 +41,28 @@ class Formfiter {
 			$data = htmlentities( \Yaf\Dispatcher::getInstance()->getRequest()->getPost($param['name']) );
 		}elseif($type == 'get'){
 			$data = htmlentities( \Yaf\Dispatcher::getInstance()->getRequest()->getQuery($param['name']));
-		}elseif($type = 'url'){
-			$data = htmlentities( \Yaf\Dispatcher::getInstance()->getParam($param['name']));
 		}
 		return $data;
 	}
 
+	public function _check($param,$url_data,&$valid_data){
+		if( $url_data == null || trim($url_data) == ""){
+			if($param['is_option'] === false){
+				return false;
+			}else {
+				$valid_data[$param['name']] = $param['default'];
+				return true;
+			}
+		}
+
+		$from_class = '\yk\formfilter\F'.$param['type'];
+		$from_filter_class = new $from_class();
+		$valid_data[$param['name']] = $from_filter_class->vaild($url_data,$param);
+		if($valid_data[$param['name']] === false){
+			return false;
+		}
+		return true;
+	}
 
 
 }
