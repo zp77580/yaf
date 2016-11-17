@@ -6,11 +6,12 @@ class TestAction extends yk\BaseAction {
 	}
 	public function invoke(){
 		$dao1 = \yk\Db::getDb('app');
-		$dao2 = \yk\Db::getDb('app');
-		$dao3 = \yk\Db::getDb('app');
-		var_dump($dao1);
-		var_dump($dao2);
-		var_dump($dao3);die;
+		$dao1->startTransaction();
+	    $sql = "select aid from properties.properties_album limit 1";
+		$res = $dao1->query($sql);
+		$dao1->commit();
+		var_dump($res);
+		die;
 		$ret = $this->valid_data;
 		return $ret;
 	}

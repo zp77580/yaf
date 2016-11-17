@@ -29,6 +29,7 @@ abstract class BaseAction extends \Yaf\Action_Abstract {
 		}else{
 			$smarty_adapter->ajax($display_data);
 		}
+		\yk\Db::closeAllConns();
 		return true;
 	}
 	public function execute(){
