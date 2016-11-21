@@ -15,10 +15,10 @@ class Db{
 	);
 
 	public static $redis = array(
-		array(
-			'ip' => '127.0.0.1',
-			'port' => 3306,
-		),
+		'online' => array(
+            'ip' => '127.0.0.1',
+            'port' => 6379,
+            ),
 	);
 	
 }

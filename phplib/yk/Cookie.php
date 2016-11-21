@@ -18,6 +18,6 @@ class Cookie
 			$expire = time() + 3600*24;
 		}
 		return setcookie(self::$G_COOKIE.$name, $value, $expire, $path, $domain, $secure);
-	} 
+	}
 
 }
