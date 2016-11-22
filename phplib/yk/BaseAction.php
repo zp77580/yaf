@@ -14,7 +14,14 @@ abstract class BaseAction extends \Yaf\Action_Abstract {
 	);
 
 	public function beforeInvoke(){
+		//准备日志
 		define("MODULE", strtolower($this->getRequest()->getModuleName()));
+		$log_config = new \Yaf\Config\Ini( APPLICATION_PATH . "/conf/log.ini",'log');
+		$log_config_arr = $log_config->toArray();
+		$log_config_arr['strLogFile'] = ROOT_PATH.'/'.$log_config_arr['logPath'].'/'.MODULE.".log";
+		//\ut\Log::init( $log_config_arr );
+
+
 		$this->init();
 		$formfiter = new \yk\Formfiter();
 		$this->valid_data = $formfiter->form_chceck($this->params);
